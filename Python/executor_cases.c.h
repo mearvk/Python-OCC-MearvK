@@ -7467,11 +7467,6 @@
             _PyStackRef nos;
             nos = stack_pointer[-2];
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                SET_CURRENT_CACHED_VALUES(0);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_subscript != _PyDict_Subscript) {
                 UOP_STAT_INC(uopcode, miss);
                 SET_CURRENT_CACHED_VALUES(0);
@@ -7493,12 +7488,6 @@
             _PyStackRef _stack_item_0 = _tos_cache0;
             nos = stack_pointer[-1];
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                _tos_cache0 = _stack_item_0;
-                SET_CURRENT_CACHED_VALUES(1);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_subscript != _PyDict_Subscript) {
                 UOP_STAT_INC(uopcode, miss);
                 _tos_cache0 = _stack_item_0;
@@ -7522,13 +7511,6 @@
             _PyStackRef _stack_item_1 = _tos_cache1;
             nos = _stack_item_0;
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                _tos_cache1 = _stack_item_1;
-                _tos_cache0 = nos;
-                SET_CURRENT_CACHED_VALUES(2);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_subscript != _PyDict_Subscript) {
                 UOP_STAT_INC(uopcode, miss);
                 _tos_cache1 = _stack_item_1;
@@ -7552,14 +7534,6 @@
             _PyStackRef _stack_item_2 = _tos_cache2;
             nos = _stack_item_1;
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                _tos_cache2 = _stack_item_2;
-                _tos_cache1 = nos;
-                _tos_cache0 = _stack_item_0;
-                SET_CURRENT_CACHED_VALUES(3);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_subscript != _PyDict_Subscript) {
                 UOP_STAT_INC(uopcode, miss);
                 _tos_cache2 = _stack_item_2;
@@ -7582,11 +7556,6 @@
             _PyStackRef nos;
             nos = stack_pointer[-2];
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                SET_CURRENT_CACHED_VALUES(0);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_ass_subscript != _PyDict_StoreSubscript) {
                 UOP_STAT_INC(uopcode, miss);
                 SET_CURRENT_CACHED_VALUES(0);
@@ -7609,12 +7578,6 @@
             _PyStackRef _stack_item_0 = _tos_cache0;
             nos = stack_pointer[-1];
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                _tos_cache0 = _stack_item_0;
-                SET_CURRENT_CACHED_VALUES(1);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_ass_subscript != _PyDict_StoreSubscript) {
                 UOP_STAT_INC(uopcode, miss);
                 _tos_cache0 = _stack_item_0;
@@ -7639,13 +7602,6 @@
             _PyStackRef _stack_item_1 = _tos_cache1;
             nos = _stack_item_0;
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                _tos_cache1 = _stack_item_1;
-                _tos_cache0 = nos;
-                SET_CURRENT_CACHED_VALUES(2);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_ass_subscript != _PyDict_StoreSubscript) {
                 UOP_STAT_INC(uopcode, miss);
                 _tos_cache1 = _stack_item_1;
@@ -7672,14 +7628,6 @@
             _PyStackRef _stack_item_2 = _tos_cache2;
             nos = _stack_item_1;
             PyObject *o = PyStackRef_AsPyObjectBorrow(nos);
-            if (!Py_TYPE(o)->tp_as_mapping) {
-                UOP_STAT_INC(uopcode, miss);
-                _tos_cache2 = _stack_item_2;
-                _tos_cache1 = nos;
-                _tos_cache0 = _stack_item_0;
-                SET_CURRENT_CACHED_VALUES(3);
-                JUMP_TO_JUMP_TARGET();
-            }
             if (Py_TYPE(o)->tp_as_mapping->mp_ass_subscript != _PyDict_StoreSubscript) {
                 UOP_STAT_INC(uopcode, miss);
                 _tos_cache2 = _stack_item_2;
