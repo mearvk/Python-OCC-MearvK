@@ -622,7 +622,6 @@
                 PyObject *right_o = PyStackRef_AsPyObjectBorrow(right);
                 assert(PyLong_CheckExact(left_o));
                 assert(PyLong_CheckExact(right_o));
-                assert(_PyLong_BothAreCompact((PyLongObject *)left_o, (PyLongObject *)right_o));
                 STAT_INC(BINARY_OP, hit);
                 res_stackref = _PyCompactLong_Multiply((PyLongObject *)left_o, (PyLongObject *)right_o);
                 if (PyStackRef_IsNull(res_stackref )) {
@@ -631,6 +630,9 @@
                 }
                 l_stackref = left;
                 r_stackref = right;
+                if (PyStackRef_IsError(res_stackref )) {
+                    goto error;
+                }
                 /* End of uop copied from bytecodes for constant evaluation */
                 (void)l_stackref;
                 (void)r_stackref;
@@ -693,7 +695,6 @@
                 PyObject *right_o = PyStackRef_AsPyObjectBorrow(right);
                 assert(PyLong_CheckExact(left_o));
                 assert(PyLong_CheckExact(right_o));
-                assert(_PyLong_BothAreCompact((PyLongObject *)left_o, (PyLongObject *)right_o));
                 STAT_INC(BINARY_OP, hit);
                 res_stackref = _PyCompactLong_Add((PyLongObject *)left_o, (PyLongObject *)right_o);
                 if (PyStackRef_IsNull(res_stackref )) {
@@ -702,6 +703,9 @@
                 }
                 l_stackref = left;
                 r_stackref = right;
+                if (PyStackRef_IsError(res_stackref )) {
+                    goto error;
+                }
                 /* End of uop copied from bytecodes for constant evaluation */
                 (void)l_stackref;
                 (void)r_stackref;
@@ -764,7 +768,6 @@
                 PyObject *right_o = PyStackRef_AsPyObjectBorrow(right);
                 assert(PyLong_CheckExact(left_o));
                 assert(PyLong_CheckExact(right_o));
-                assert(_PyLong_BothAreCompact((PyLongObject *)left_o, (PyLongObject *)right_o));
                 STAT_INC(BINARY_OP, hit);
                 res_stackref = _PyCompactLong_Subtract((PyLongObject *)left_o, (PyLongObject *)right_o);
                 if (PyStackRef_IsNull(res_stackref )) {
@@ -773,6 +776,9 @@
                 }
                 l_stackref = left;
                 r_stackref = right;
+                if (PyStackRef_IsError(res_stackref )) {
+                    goto error;
+                }
                 /* End of uop copied from bytecodes for constant evaluation */
                 (void)l_stackref;
                 (void)r_stackref;
@@ -3063,13 +3069,15 @@
                 /* Start of uop copied from bytecodes for constant evaluation */
                 PyObject *left_o = PyStackRef_AsPyObjectBorrow(left);
                 PyObject *right_o = PyStackRef_AsPyObjectBorrow(right);
-                assert(_PyLong_IsCompact((PyLongObject *)left_o));
-                assert(_PyLong_IsCompact((PyLongObject *)right_o));
                 STAT_INC(COMPARE_OP, hit);
-                assert(_PyLong_DigitCount((PyLongObject *)left_o) <= 1 &&
-                   _PyLong_DigitCount((PyLongObject *)right_o) <= 1);
-                Py_ssize_t ileft = _PyLong_CompactValue((PyLongObject *)left_o);
-                Py_ssize_t iright = _PyLong_CompactValue((PyLongObject *)right_o);
+                int64_t ileft;
+                int64_t iright;
+                int ok = _PyLong_TryAsInt64Exact((PyLongObject *)left_o, &ileft)
+                && _PyLong_TryAsInt64Exact((PyLongObject *)right_o, &iright);
+                if (!ok) {
+                    ctx->done = true;
+                    break;
+                }
                 int sign_ish = COMPARISON_BIT(ileft, iright);
                 l_stackref = left;
                 r_stackref = right;
