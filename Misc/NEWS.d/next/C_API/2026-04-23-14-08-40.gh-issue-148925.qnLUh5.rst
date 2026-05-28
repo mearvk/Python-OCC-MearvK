@@ -1,0 +1,8 @@
+Add four new ``PyUnstable_*`` C API functions for allocation-free, non-reentrant
+call-stack iteration: :c:func:`PyUnstable_ThreadState_GetCurrentFrame`,
+:c:func:`PyUnstable_InterpreterFrame_GetCaller`,
+:c:func:`PyUnstable_InterpreterFrame_GetCodeBorrowed`, and
+:c:func:`PyUnstable_InterpreterFrame_GetLineChecked`.  These functions do not
+allocate memory, do not change reference counts, do not acquire the GIL, and do
+not re-enter the interpreter, making them suitable for use from custom memory
+allocator hooks and crash-reporting handlers.
