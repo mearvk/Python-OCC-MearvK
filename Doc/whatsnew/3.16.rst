@@ -93,6 +93,13 @@ gzip
   which is passed on to the constructor of the :class:`~gzip.GzipFile` class.
   (Contributed by Marin Misur in :gh:`91372`.)
 
+math.integer
+------------
+
+* Add :func:`math.integer.isqrt_rem` to compute integer square root with
+  a remainder.
+  (Contributed by Sergey B Kirpichev in :gh:`90345`.)
+
 os
 --
 
