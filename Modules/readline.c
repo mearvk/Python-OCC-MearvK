@@ -1406,6 +1406,11 @@ setup_readline(readlinestate *mod_state)
     completer_word_break_characters =
         strdup(" \t\n`~!@#$%^&*()-=+[{]}\\|;:'\",<>/?");
         /* All nonalphanums except '.' */
+
+    if (!completer_word_break_characters) {
+        RESTORE_LOCALE(saved_locale)
+        return -1;
+    }
 #ifdef WITH_EDITLINE
     // libedit uses rl_basic_word_break_characters instead of
     // rl_completer_word_break_characters as complete delimiter
